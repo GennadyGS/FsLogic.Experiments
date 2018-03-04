@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{A31D01
 		paket.dependencies = paket.dependencies
 	EndProjectSection
 EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FsLogic", "paket-files\kurtschelfthout\FsLogic\FsLogic\FsLogic.fsproj", "{0902EF53-77D0-44EC-9863-10EC3F8E37FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{035D3EE5-0620-4743-9A63-E3F1FE522377}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{035D3EE5-0620-4743-9A63-E3F1FE522377}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{035D3EE5-0620-4743-9A63-E3F1FE522377}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0902EF53-77D0-44EC-9863-10EC3F8E37FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0902EF53-77D0-44EC-9863-10EC3F8E37FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0902EF53-77D0-44EC-9863-10EC3F8E37FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0902EF53-77D0-44EC-9863-10EC3F8E37FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

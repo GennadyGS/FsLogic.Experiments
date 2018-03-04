@@ -8,4 +8,8 @@
     <Compile Include="Library.fs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FsLogic.Experiments\FsLogic.Experiments.fsproj" />
+  </ItemGroup>
+
 </Project>
