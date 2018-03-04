@@ -8,4 +8,8 @@
     <Compile Include="Library.fs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\paket-files\kurtschelfthout\FsLogic\FsLogic\FsLogic.fsproj" />
+  </ItemGroup>
+
 </Project>
