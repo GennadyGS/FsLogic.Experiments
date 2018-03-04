@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsLogic.Experiments", "FsLogic.Experiments\FsLogic.Experiments.fsproj", "{C655AECA-50C4-4235-AB8B-44862FFD7E46}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FsLogic.Experiments", "FsLogic.Experiments\FsLogic.Experiments.fsproj", "{C655AECA-50C4-4235-AB8B-44862FFD7E46}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsLogic.Experiments.Tests", "FsLogic.Experiments.Tests\FsLogic.Experiments.Tests.fsproj", "{035D3EE5-0620-4743-9A63-E3F1FE522377}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FsLogic.Experiments.Tests", "FsLogic.Experiments.Tests\FsLogic.Experiments.Tests.fsproj", "{035D3EE5-0620-4743-9A63-E3F1FE522377}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{A31D01B1-5DC8-448A-A4A6-28512854E0E9}"
+	ProjectSection(SolutionItems) = preProject
+		paket.dependencies = paket.dependencies
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
