@@ -7,7 +7,13 @@
     <Compile Include="PredicateTests.fs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FsLogic.Experiments\FsLogic.Experiments.fsproj" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.0" />
   </ItemGroup>
-  <Import Project="..\.paket\Paket.Restore.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\FsLogic.Experiments\FsLogic.Experiments.fsproj" />
+    <ProjectReference Include="..\Lib\FsLogic\FsLogic\FsLogic.fsproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="4.2.3" />
+  </ItemGroup>
 </Project>
