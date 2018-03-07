@@ -1,4 +1,0 @@
-source https://www.nuget.org/api/v2
-github kurtschelfthout/FsLogic
-nuget xunit
-nuget xunit.runner.visualstudio version_in_path: true
