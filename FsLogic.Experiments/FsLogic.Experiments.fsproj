@@ -1,16 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Include="Lists.fs" />
     <Compile Include="Predicates.fs" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\paket-files\kurtschelfthout\FsLogic\FsLogic\FsLogic.fsproj" />
   </ItemGroup>
-
+  <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>
