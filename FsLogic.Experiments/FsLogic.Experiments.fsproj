@@ -8,7 +8,9 @@
     <Compile Include="Predicates.fs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\paket-files\kurtschelfthout\FsLogic\FsLogic\FsLogic.fsproj" />
+    <ProjectReference Include="..\Lib\FsLogic\FsLogic\FsLogic.fsproj" />
   </ItemGroup>
-  <Import Project="..\.paket\Paket.Restore.targets" />
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="4.2.3" />
+  </ItemGroup>
 </Project>
