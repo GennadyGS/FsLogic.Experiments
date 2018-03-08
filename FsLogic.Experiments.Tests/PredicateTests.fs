@@ -1,13 +1,12 @@
-module FsLogic.Experiments.Tests.PredicateTests
+﻿module FsLogic.Experiments.Tests.PredicateTests
 
 open Xunit
 open FsLogic.Substitution
 open FsLogic.Goal
 open Swensen.Unquote
 open FsLogic.Experiments.Predicates
-open FsLogic.Experiments.Lists
 
-let getValues<'T> = 
+let getValues<'T> =
     List.map ReifiedTerm.GetDeterminedValue
     >> List.map (fun obj -> obj :?> 'T)
 
@@ -31,7 +30,8 @@ let rec internal ancestor x y =
     fathero x y ||| (fathero x z &&& recurse (fun () -> ancestor z y))
 
 let f x y =
-    x *=* ~~"Abraham" &&& y *=* ~~"Isaac"
+    (x *=* ~~"Abraham" &&& y *=* ~~"Isaac")
+    ||| (x *=* ~~"Isaac" &&& y *=* ~~"Jacob")
 
 [<Fact>]
 let ``should infer result from simple facts`` () =
@@ -52,18 +52,3 @@ let ``should infer result from rule``() =
 let ``should infer result from recursive rule`` () =
     let res = run -1 (fun q -> ancestor q ~~"Benjamin")
     res |> getSortedValues =! ([ "Jacob"; "Abraham"; "Isaac" ] |> List.sort)
-
-[<Fact>]
-let ``membero should return singleton``() =
-    let res = run -1 (fun q -> membero q ~~[1])
-    res =! [ Det 1 ]
-
-[<Fact>]
-let ``membero should return empty for empty list``() = 
-    let res = run -1 (fun q -> membero q nil)
-    res =! []
-
-[<Fact>]
-let ``membero should return all items of list``() = 
-    let res = run -1 (fun q -> membero q ~~[1; 2; 3])
-    res =! [Det 1; Det 2; Det 3]

@@ -16,7 +16,7 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FsLogic", "Lib\FsLogic\FsLo
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FsLogic.Test", "Lib\FsLogic\FsLogic.Test\FsLogic.Test.fsproj", "{40E83B21-B755-4014-8115-A11CF880D666}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsLogic.Experiments.Tests", "FsLogic.Experiments.Tests\FsLogic.Experiments.Tests.fsproj", "{DDC4DAF9-7B86-40E1-A7E3-9A2EB36863A7}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsLogic.Experiments.Tests", "FsLogic.Experiments.Tests\FsLogic.Experiments.Tests.fsproj", "{E53AFB4C-0652-4352-97F2-8C5A4C983AFE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,10 +36,10 @@ Global
 		{40E83B21-B755-4014-8115-A11CF880D666}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40E83B21-B755-4014-8115-A11CF880D666}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40E83B21-B755-4014-8115-A11CF880D666}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DDC4DAF9-7B86-40E1-A7E3-9A2EB36863A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DDC4DAF9-7B86-40E1-A7E3-9A2EB36863A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DDC4DAF9-7B86-40E1-A7E3-9A2EB36863A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DDC4DAF9-7B86-40E1-A7E3-9A2EB36863A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E53AFB4C-0652-4352-97F2-8C5A4C983AFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E53AFB4C-0652-4352-97F2-8C5A4C983AFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E53AFB4C-0652-4352-97F2-8C5A4C983AFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E53AFB4C-0652-4352-97F2-8C5A4C983AFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
