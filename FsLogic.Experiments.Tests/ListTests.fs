@@ -1,4 +1,4 @@
-﻿module FsLogic.Experiments.Tests.ListTests
+﻿module Lists
 
 open Xunit
 open Swensen.Unquote

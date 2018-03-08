@@ -1,4 +1,4 @@
-﻿module FsLogic.Experiments.Tests.PredicateTests
+﻿module Predicates
 
 open Xunit
 open FsLogic.Substitution
