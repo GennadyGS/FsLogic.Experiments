@@ -56,9 +56,11 @@
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="Utils.fs" />
     <Compile Include="PredicateTests.fs" />
-    <Content Include="packages.config" />
     <Compile Include="ListTests.fs" />
+    <Compile Include="ArithmeticTests.fs" />
+    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core">

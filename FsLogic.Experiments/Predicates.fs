@@ -9,6 +9,6 @@ let inline unaryPredicate values =
 
 let inline binaryPredicate values =  
     fun arg1 arg2 -> 
-        [for (value1, value2) in values -> [arg1 *=* ~~value1; arg2 *=* ~~value2]] 
+        seq [for (value1, value2) in values -> [arg1 *=* ~~value1; arg2 *=* ~~value2]] 
         |> conde
 

@@ -6,13 +6,7 @@ open FsLogic
 open FsLogic.Substitution
 open FsLogic.Goal
 open FsLogic.Experiments.Predicates
-
-let getValues<'T> =
-    List.map ReifiedTerm.GetDeterminedValue
-    >> List.map (fun obj -> obj :?> 'T)
-
-let getSortedValues<'T when 'T : comparison> = 
-    getValues<'T> >> List.sort
+open FsLogic.Experiments.Tests
 
 let internal fathero =
     binaryPredicate [
@@ -47,11 +41,11 @@ let ``should infer result from rule``() =
 [<Fact>]
 let ``should infer result from recursive rule`` () =
     let res = run -1 (fun q -> ancestor q ~~"Benjamin")
-    res |> getSortedValues =! ([ "Jacob"; "Abraham"; "Isaac" ] |> List.sort)
+    res |> Utils.getSortedValues =! ([ "Jacob"; "Abraham"; "Isaac" ] |> List.sort)
 
 [<Fact>]
 let ``brothers should return distinct`` () =
     let res = run -1 (fun q -> 
         let (x, y) = fresh()
         brother x y &&& q *=* ~~(x, y))
-    res |> getSortedValues<string*string> =! ([ ("Ismael", "Isaac"); ("Isaac", "Ismael") ] |> List.sort)
+    res |> Utils.getSortedValues<string*string> =! ([ ("Ismael", "Isaac"); ("Isaac", "Ismael") ] |> List.sort)
