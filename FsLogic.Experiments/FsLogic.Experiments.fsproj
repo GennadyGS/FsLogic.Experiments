@@ -2,6 +2,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <DisableImplicitFSharpCoreReference>true</DisableImplicitFSharpCoreReference>
+    <FSharpCoreImplicitPackageVersion>4.2.3</FSharpCoreImplicitPackageVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Lists.fs" />
