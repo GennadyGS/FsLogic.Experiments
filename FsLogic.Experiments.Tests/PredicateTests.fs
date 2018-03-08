@@ -1,9 +1,9 @@
 ﻿module FsLogic.Experiments.Tests.PredicateTests
 
-open Xunit
+open Expecto
+open Swensen.Unquote
 open FsLogic.Substitution
 open FsLogic.Goal
-open Swensen.Unquote
 open FsLogic.Experiments.Predicates
 
 let getValues<'T> =
@@ -29,26 +29,21 @@ let rec internal ancestor x y =
     let z = fresh()
     fathero x y ||| (fathero x z &&& recurse (fun () -> ancestor z y))
 
-let f x y =
-    (x *=* ~~"Abraham" &&& y *=* ~~"Isaac")
-    ||| (x *=* ~~"Isaac" &&& y *=* ~~"Jacob")
+[<Tests>]
+let tests =
+    testList "Facts" [
+        testCase "should infer result from simple facts" (fun _ ->
+            let res = run -1 (fun q -> fathero q ~~"Isaac")
+            res =! [ Det "Abraham" ]
+        )
 
-[<Fact>]
-let ``should infer result from simple facts`` () =
-    let res = run -1 (fun q -> f q ~~"Isaac")
-    res =! [ Det "Abraham" ]
+        testCase "should infer result from rule" (fun _ ->
+            let res = run -1 (fun q -> grandFathero q ~~"Benjamin")
+            res =! [ Det "Isaac" ]
+        )
 
-[<Fact>]
-let ``should infer result from simple facts 2`` () =
-    let res = run -1 (fun q -> fathero q ~~"Isaac")
-    res =! [ Det "Abraham" ]
-
-[<Fact>]
-let ``should infer result from rule``() = 
-    let res = run -1 (fun q -> grandFathero q ~~"Benjamin")
-    res =! [ Det "Isaac" ]
-
-[<Fact>]
-let ``should infer result from recursive rule`` () =
-    let res = run -1 (fun q -> ancestor q ~~"Benjamin")
-    res |> getSortedValues =! ([ "Jacob"; "Abraham"; "Isaac" ] |> List.sort)
+        testCase "should infer result from recursive rule" (fun _ ->
+            let res = run -1 (fun q -> ancestor q ~~"Benjamin")
+            res |> getSortedValues =! ([ "Jacob"; "Abraham"; "Isaac" ] |> List.sort)
+        )
+    ]
