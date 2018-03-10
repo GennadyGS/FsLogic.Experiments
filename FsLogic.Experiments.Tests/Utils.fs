@@ -13,3 +13,6 @@ let getSortedValues<'T when 'T : comparison> =
 let getNatValues = 
     getValues >> List.map toNat
 
+let getSortedNatValues = 
+    getNatValues >> List.sort
+
