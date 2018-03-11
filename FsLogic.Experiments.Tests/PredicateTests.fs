@@ -55,3 +55,4 @@ let ``Implication rule`` () =
     let pred a b = (a *<>* 1Z) ||| (b *=* 2Z)
     let res = run -1 (fun q -> pred 1Z q)
     res =! [ Det 2 ]
+
