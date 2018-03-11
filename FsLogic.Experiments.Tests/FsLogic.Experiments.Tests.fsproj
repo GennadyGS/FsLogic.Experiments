@@ -60,8 +60,8 @@
     <Compile Include="PredicateTests.fs" />
     <Compile Include="ListTests.fs" />
     <Compile Include="ArithmeticTests.fs" />
+    <Compile Include="GraphSearchTests.fs" />
     <Content Include="packages.config" />
-    <Compile Include="GraphSearch.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core">
