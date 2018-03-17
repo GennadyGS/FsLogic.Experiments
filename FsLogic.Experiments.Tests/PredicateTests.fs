@@ -8,13 +8,21 @@ open FsLogic.Goal
 open FsLogic.Experiments.Predicates
 open FsLogic.Experiments.Tests
 
-let internal fathero =
-    binaryPredicate [
+let private fatherList = [
         ("Abraham", "Ismael")
         ("Abraham", "Isaac")
         ("Isaac", "Jacob")
         ("Jacob", "Benjamin")
     ]
+
+let private fathero =
+    binaryPredicate fatherList
+
+let inline private fathero2 arg =
+    fatherList 
+    |> List.map (fun (father, son) -> [arg *=* (~~father, ~~son)])
+    |> conde
+
 
 let internal grandFathero gf gc = 
     let f = fresh()
@@ -56,3 +64,12 @@ let ``Implication rule`` () =
     let res = run -1 (fun q -> pred 1Z q)
     res =! [ Det 2 ]
 
+[<Fact>]
+let ``Unify tuples`` () =
+    let res = run -1 (fun q -> ~~(1Z, 2Z) *=* ~~(q, 2Z))
+    res =! [ Det 1 ]
+
+[<Fact>]
+let ``Predicate`` () =
+    let res = run -1 (fun q -> fathero2 (q, ~~"Isaac"))
+    res =! [ Det "Abraham" ]
