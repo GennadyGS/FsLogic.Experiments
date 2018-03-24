@@ -2,15 +2,21 @@
 
 open FsLogic.Goal
 
-let rec membero x l = 
-       let (h, t, t2) = fresh()
-       matche l
-            [ cons x t2 ->> []
-              cons h t   ->> [ recurse (fun () -> membero x t) ]
-            ]
+let rec membero item list = 
+       let (head, tail, tail2) = fresh()
+       matche list
+            [ cons item tail2 ->> []
+              cons head tail   ->> [ recurse (fun () -> membero item tail) ]]
 
-let rec listNotLonger l1 l2 = 
-    let anyList1, h1, h2, t1, t2 = fresh()
-    matche (l1, l2) 
-        [ (nil, anyList1) ->> []
-          (cons h1 t1, cons h2 t2) ->> [ recurse (fun () -> listNotLonger t1 t2) ]]
+let rec listNotLonger list1 list2 = 
+    let anyList, head1, head2, tail1, tail2 = fresh()
+    matche (list1, list2) 
+        [ (nil, anyList) ->> []
+          (cons head1 tail1, cons head2 tail2) ->> [ recurse (fun () -> listNotLonger tail1 tail2) ]]
+
+let rec notMembero item list = 
+    let (head, tail) = fresh()
+    matche list
+        [ nil ->> []
+          cons head tail ->> [ item *<>* head; recurse (fun () -> notMembero item tail) ]]
+
