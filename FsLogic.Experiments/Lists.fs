@@ -9,10 +9,10 @@ let rec membero item list =
               cons head tail   ->> [ recurse (fun () -> membero item tail) ]]
 
 let rec listNotLonger list1 list2 = 
-    let anyList, head1, head2, tail1, tail2 = fresh()
+    let head1, tail1, tail2 = fresh()
     matche (list1, list2) 
-        [ (nil, anyList) ->> []
-          (cons head1 tail1, cons head2 tail2) ->> [ recurse (fun () -> listNotLonger tail1 tail2) ]]
+        [ (nil, __) ->> []
+          (cons head1 tail1, cons __ tail2) ->> [ recurse (fun () -> listNotLonger tail1 tail2) ]]
 
 let rec notMembero item list = 
     let (head, tail) = fresh()
