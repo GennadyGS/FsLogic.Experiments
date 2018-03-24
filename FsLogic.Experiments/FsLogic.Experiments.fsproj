@@ -6,10 +6,10 @@
     <FSharpCoreImplicitPackageVersion>4.2.3</FSharpCoreImplicitPackageVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="GraphSearch.fs" />
-    <Compile Include="Lists.fs" />
     <Compile Include="Predicates.fs" />
+    <Compile Include="Lists.fs" />
     <Compile Include="Arithmetic.fs" />
+    <Compile Include="GraphSearch.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lib\FsLogic\FsLogic\FsLogic.fsproj" />

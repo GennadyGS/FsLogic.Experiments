@@ -23,3 +23,8 @@ let private graphLink =
 let ``graphPath should find first path`` () =
     let res = run 1 (fun q -> graphPath graphLink ~~"a" ~~"c" q)
     res =! [ Det ["a"; "c"] ]
+
+[<Fact>]
+let ``graphPath should find non-cyclic path`` () =
+    let res = run 1 (fun q -> graphPath graphLink ~~"a" ~~"f" q)
+    res =! [ Det ["a"; "c"; "f"] ]
