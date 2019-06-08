@@ -23,7 +23,6 @@ let inline private fathero2 arg =
     |> List.map (fun (father, son) -> [arg *=* (~~father, ~~son)])
     |> conde
 
-
 let internal grandFathero gf gc = 
     let f = fresh()
     fathero gf f &&& fathero f gc

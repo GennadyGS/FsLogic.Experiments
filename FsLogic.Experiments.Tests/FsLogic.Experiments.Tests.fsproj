@@ -61,6 +61,7 @@
     <Compile Include="ListTests.fs" />
     <Compile Include="ArithmeticTests.fs" />
     <Compile Include="GraphSearchTests.fs" />
+    <Compile Include="ParsingTests.fs" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
