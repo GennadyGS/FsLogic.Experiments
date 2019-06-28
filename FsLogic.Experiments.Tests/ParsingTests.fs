@@ -24,6 +24,7 @@ let freshVars () = Unchecked.defaultof<'r>
 [<ReflectedDefinition>]
 let next (x : 'a list) = true
 
+[<ReflectedDefinition>]
 let isStep2 step =
     next ["up"] && step = "up" ||
     next ["down"] && step = "down"
@@ -57,6 +58,13 @@ let ``one-step move should be parsed``() =
 let ``move should be parsed``() =
     let res = run -1 (fun q -> isMove q ~~["up"; "down"; "up"] nil)
     res =! [ Det ["up"; "down"; "up"] ]
+
+[<Fact>]
+let ``move should be predicted``() =
+    let res = run 2 (fun q -> 
+        let list, rest = fresh ()
+        isMove list (cons ~~"up" (cons ~~"down" (cons q rest))) rest)
+    res =! [ Det "up"; Det "down" ]
 
 [<Fact>]
 let ``sentence should be parsed 2``() =
