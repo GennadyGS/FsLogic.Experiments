@@ -5,10 +5,12 @@ open Swensen.Unquote
 open FsLogic.Substitution
 open FsLogic.Goal
 
+type Step = Up | Down
+
 let isStep step list rest =
     conde [
-        [list *=* cons ~~"up" rest; step *=* ~~"up"]
-        [list *=* cons ~~"down" rest; step *=* ~~"down"]
+        [list *=* cons ~~"up" rest; step *=* prim Up]
+        [list *=* cons ~~"down" rest; step *=* prim Down]
     ]
 
 let rec isMove move list rest =
@@ -26,8 +28,8 @@ let next (x : 'a list) = true
 
 [<ReflectedDefinition>]
 let isStep2 step =
-    next ["up"] && step = "up" ||
-    next ["down"] && step = "down"
+    next ["up"] && step = Up ||
+    next ["down"] && step = Down
 
 let rec isMove2 move =
     let step', move' = freshVars ()
@@ -46,18 +48,18 @@ let isMove3 move = isList isStep2 move
 [<Fact>]
 let ``step should be parsed``() =
     let res = run -1 (fun q -> isStep q ~~["up"] nil)
-    res =! [ Det "up" ]
+    res =! [ Det Up ]
 
 
 [<Fact>]
 let ``one-step move should be parsed``() =
     let res = run -1 (fun q -> isMove q ~~["down"] nil)
-    res =! [ Det ["down"] ]
+    res =! [ Det [Down] ]
 
 [<Fact>]
 let ``move should be parsed``() =
     let res = run -1 (fun q -> isMove q ~~["up"; "down"; "up"] nil)
-    res =! [ Det ["up"; "down"; "up"] ]
+    res =! [ Det [Up; Down; Up] ]
 
 [<Fact>]
 let ``move should be predicted``() =
@@ -70,7 +72,7 @@ let ``move should be predicted``() =
 let ``sentence should be parsed 2``() =
     let mkBody moves targetMoves = isMove moves ~~targetMoves nil
     let res = run -1 (fun q -> mkBody q ["up"; "down"; "up"])
-    res =! [ Det ["up"; "down"; "up"] ]
+    res =! [ Det [Up; Down; Up] ]
 
 [<Fact>]
 let ``sentence should be parsed 3``() =
@@ -84,4 +86,4 @@ let ``sentence should be parsed 3``() =
         let isMove move list rest = isList isStep move list rest
         isMove q ~~["up"; "down"; "up"] nil
     )
-    res =! [ Det ["up"; "down"; "up"] ]
+    res =! [ Det [Up; Down; Up] ]
