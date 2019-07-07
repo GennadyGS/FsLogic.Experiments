@@ -69,13 +69,13 @@ let ``move should be predicted``() =
     res =! [ Det "up"; Det "down" ]
 
 [<Fact>]
-let ``sentence should be parsed 2``() =
+let ``move should be parsed 2``() =
     let mkBody moves targetMoves = isMove moves ~~targetMoves nil
     let res = run -1 (fun q -> mkBody q ["up"; "down"; "up"])
     res =! [ Det [Up; Down; Up] ]
 
 [<Fact>]
-let ``sentence should be parsed 3``() =
+let ``move should be parsed 3``() =
     let res = run -1 (fun q -> 
         let rec isList isItem resultList list rest = 
             let list1, item1, list2 = fresh ()
