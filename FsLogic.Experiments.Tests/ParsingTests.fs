@@ -87,3 +87,25 @@ let ``move should be parsed 3``() =
         isMove q ~~["up"; "down"; "up"] nil
     )
     res =! [ Det [Up; Down; Up] ]
+
+type sentence = {
+    Noun: string
+    Verb: string
+}
+[<Fact>]
+let ``sentence should be parsed``() =
+    let rec isList isItem resultList list rest = 
+        let list1, item1, list2 = fresh ()
+        conde [
+            [isItem item1 list rest; resultList *=* cons item1 nil]
+            [isItem item1 list list1; recurse (fun () -> isList isItem list2 list1 rest); resultList *=* cons item1 list2]
+        ]
+    let isMove move list rest = isList isStep move list rest
+    let isNounPhrase = 
+    let isSentence sentence list rest =
+        isNounPhrase nounPhrase list list1 &&& 
+        isVerbPhrase verbPhrasePhrase list1 rest 
+    let res = run -1 (fun q -> 
+        isMove q ~~["up"; "down"; "up"] nil
+    )
+    res =! [ Det [Up; Down; Up] ]
