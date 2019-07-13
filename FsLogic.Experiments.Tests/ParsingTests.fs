@@ -4,6 +4,7 @@ open Xunit
 open Swensen.Unquote
 open FsLogic.Substitution
 open FsLogic.Goal
+open FSharp.Quotations.Evaluator
 
 type Step = Up | Down
 
@@ -124,3 +125,17 @@ let ``sentence should be parsed``() =
         isSentence q ~~["a"; "cat"; "catch"] nil
     )
     res =! [Det ("cat", "catch")]
+
+[<Fact>]
+let ``step should be parsed with quotations``() =
+    let goalExpr = <@ 
+        let isStep step list rest =
+            conde [
+                [unify (list, cons (prim "up") rest); unify (step, prim Up)]
+                [unify (list, cons (prim "down") rest); unify (step, prim Down)]
+            ]
+        fun arg -> isStep arg (ofList [prim "up"]) nil 
+    @>
+    let goalExprEvaluated = goalExpr.Evaluate()
+    let res = run -1 goalExprEvaluated
+    res =! [ Det Up ]
