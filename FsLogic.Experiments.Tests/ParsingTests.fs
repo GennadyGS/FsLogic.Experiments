@@ -128,13 +128,14 @@ let ``sentence should be parsed``() =
 
 [<Fact>]
 let ``step should be parsed with quotations``() =
+    let target = <@ "up" @>
     let goalExpr = <@ 
         let isStep step list rest =
             conde [
                 [unify (list, cons (prim "up") rest); unify (step, prim Up)]
                 [unify (list, cons (prim "down") rest); unify (step, prim Down)]
             ]
-        fun arg -> isStep arg (ofList [prim "up"]) nil 
+        fun arg -> isStep arg (ofList [prim %target]) nil 
     @>
     let goalExprEvaluated = goalExpr.Evaluate()
     let res = run -1 goalExprEvaluated
