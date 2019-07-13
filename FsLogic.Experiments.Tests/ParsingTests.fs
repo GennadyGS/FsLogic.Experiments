@@ -50,7 +50,6 @@ let ``step should be parsed``() =
     let res = run -1 (fun q -> isStep q ~~["up"] nil)
     res =! [ Det Up ]
 
-
 [<Fact>]
 let ``one-step move should be parsed``() =
     let res = run -1 (fun q -> isMove q ~~["down"] nil)
@@ -92,20 +91,36 @@ type sentence = {
     Noun: string
     Verb: string
 }
+
 [<Fact>]
 let ``sentence should be parsed``() =
-    let rec isList isItem resultList list rest = 
-        let list1, item1, list2 = fresh ()
+    let isNoun noun list rest =
         conde [
-            [isItem item1 list rest; resultList *=* cons item1 nil]
-            [isItem item1 list list1; recurse (fun () -> isList isItem list2 list1 rest); resultList *=* cons item1 list2]
+            [list *=* cons ~~"cat" rest; noun *=* ~~"cat"]
+            [list *=* cons ~~"mouse" rest; noun *=* ~~"mouse"]
         ]
-    let isMove move list rest = isList isStep move list rest
-    let isNounPhrase = 
+    let isArticle article list rest = 
+        conde [
+            [list *=* cons ~~"a" rest; article *=* ~~"a"]
+            [list *=* cons ~~"the" rest; article *=* ~~"the"]
+        ]
+    let isNounPhrase noun list rest = 
+        let article, list1 = fresh()
+        conde [
+            [isArticle article list list1; isNoun noun list1 rest]
+            [isNoun noun list rest]
+        ]
+    let isVerbPhrase verb list rest = 
+        conde [
+            [list *=* cons ~~"catch" rest; verb *=* ~~"catch"]
+            [list *=* cons ~~"hide" rest; verb *=* ~~"hide"]
+        ]
     let isSentence sentence list rest =
+        let nounPhrase, verbPhrase, list1 = fresh()
         isNounPhrase nounPhrase list list1 &&& 
-        isVerbPhrase verbPhrasePhrase list1 rest 
+        isVerbPhrase verbPhrase list1 rest &&&
+        sentence *=* ~~(nounPhrase, verbPhrase)
     let res = run -1 (fun q -> 
-        isMove q ~~["up"; "down"; "up"] nil
+        isSentence q ~~["a"; "cat"; "catch"] nil
     )
-    res =! [ Det [Up; Down; Up] ]
+    res =! [Det ("cat", "catch")]
