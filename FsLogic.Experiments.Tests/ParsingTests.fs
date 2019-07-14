@@ -140,7 +140,7 @@ let buildGoalExpr predicateExpr sourceListExpr =
     let rec traversePredicate predicate = 
         match predicate with
         | Lambda(v, body) -> 
-            let termType = typeof<Term<Step>>
+            let termType = typedefof<Term<_>>.MakeGenericType(v.Type)
             let termVar = Var(v.Name, termType)
             Expr.Lambda(termVar, traversePredicateBody body (Expr.Var termVar))
         | _ -> failwith "lambda is expected"
