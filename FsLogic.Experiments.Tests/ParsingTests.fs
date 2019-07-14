@@ -6,6 +6,8 @@ open FsLogic.Substitution
 open FsLogic.Goal
 open FSharp.Quotations.Evaluator
 open Microsoft.FSharp.Quotations
+open Microsoft.FSharp.Quotations.Patterns
+open Microsoft.FSharp.Quotations.ExprShape
 
 type Step = Up | Down
 
@@ -128,28 +130,49 @@ let ``sentence should be parsed``() =
     res =! [Det ("cat", "catch")]
 
 let buildGoalExpr predicateExpr sourceListExpr = 
-    <@ 
-    let isStep step list rest =
-        conde [
-            [unify (list, cons (prim "up") rest); unify (step, prim Up)]
-            [unify (list, cons (prim "down") rest); unify (step, prim Down)]
-        ]
-    fun arg -> isStep arg %sourceListExpr nil 
-    @>
+    let traversePredicateBody (bodyExpr : Expr) (argExpr : Expr) = 
+        <@
+            conde [
+                [unify (%sourceListExpr, cons (prim "up") nil); unify (%%argExpr, prim Up)]
+                [unify (%sourceListExpr, cons (prim "down") nil); unify (%%argExpr, prim Down)]
+            ]
+        @>
+    let rec traversePredicate predicate = 
+        match predicate with
+        | Lambda(v, body) -> 
+            let termType = typeof<Term<Step>>
+            let termVar = Var(v.Name, termType)
+            Expr.Lambda(termVar, traversePredicateBody body (Expr.Var termVar))
+        | _ -> failwith "lambda is expected"
+    traversePredicate predicateExpr
+    //<@ 
+    //    //let isStep step list rest =
+    //    //    conde [
+    //    //        [unify (list, cons (prim "up") rest); unify (step, prim Up)]
+    //    //        [unify (list, cons (prim "down") rest); unify (step, prim Down)]
+    //    //    ]
+    //    //fun arg -> isStep arg %sourceListExpr nil 
+    //    fun arg ->
+    //        conde [
+    //            [unify (%sourceListExpr, cons (prim "up") nil); unify (arg, prim Up)]
+    //            [unify (%sourceListExpr, cons (prim "down") nil); unify (arg, prim Down)]
+    //        ]
+    //@>
 
 let buildGoal predicateExpr sourceList = 
     let sourceListTerm = sourceList |> List.map prim |> ofList
     let goalExpr = buildGoalExpr predicateExpr <@ sourceListTerm @>
-    goalExpr.Evaluate()
+    Expr.Cast<Term<Step> -> Goal>(goalExpr).Evaluate()
 
 [<Fact>]
 let ``step should be parsed with quotations``() =
     let sourceList = ["up"]
-    let predicateExpr = <@ 
-        fun step ->
-            next ["up"] && step = Up ||
-            next ["down"] && step = Down
-    @>
+    let predicateExpr = 
+        <@ 
+            fun step ->
+                next ["up"] && step = Up ||
+                next ["down"] && step = Down
+        @>
     let goal = buildGoal predicateExpr sourceList
     let res = run -1 goal
     res =! [ Det Up ]
