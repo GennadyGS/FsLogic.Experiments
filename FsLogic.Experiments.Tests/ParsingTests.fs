@@ -5,6 +5,7 @@ open Swensen.Unquote
 open FsLogic.Substitution
 open FsLogic.Goal
 open FSharp.Quotations.Evaluator
+open Microsoft.FSharp.Quotations
 
 type Step = Up | Down
 
@@ -126,17 +127,29 @@ let ``sentence should be parsed``() =
     )
     res =! [Det ("cat", "catch")]
 
+let buildGoalExpr predicateExpr sourceListExpr = 
+    <@ 
+    let isStep step list rest =
+        conde [
+            [unify (list, cons (prim "up") rest); unify (step, prim Up)]
+            [unify (list, cons (prim "down") rest); unify (step, prim Down)]
+        ]
+    fun arg -> isStep arg %sourceListExpr nil 
+    @>
+
+let buildGoal predicateExpr sourceList = 
+    let sourceListTerm = sourceList |> List.map prim |> ofList
+    let goalExpr = buildGoalExpr predicateExpr <@ sourceListTerm @>
+    goalExpr.Evaluate()
+
 [<Fact>]
 let ``step should be parsed with quotations``() =
-    let target = <@ "up" @>
-    let goalExpr = <@ 
-        let isStep step list rest =
-            conde [
-                [unify (list, cons (prim "up") rest); unify (step, prim Up)]
-                [unify (list, cons (prim "down") rest); unify (step, prim Down)]
-            ]
-        fun arg -> isStep arg (ofList [prim %target]) nil 
+    let sourceList = ["up"]
+    let predicateExpr = <@ 
+        fun step ->
+            next ["up"] && step = Up ||
+            next ["down"] && step = Down
     @>
-    let goalExprEvaluated = goalExpr.Evaluate()
-    let res = run -1 goalExprEvaluated
+    let goal = buildGoal predicateExpr sourceList
+    let res = run -1 goal
     res =! [ Det Up ]
